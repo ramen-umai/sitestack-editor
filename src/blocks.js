@@ -663,3 +663,63 @@ Blockly.common.defineBlocks({
              `utterance.volume = ${volume};\n` +
              `speechSynthesis.speak(utterance);\n`;
     };
+
+// --------------------
+// CSSアニメーションブロック定義
+// --------------------
+const css_animation_block = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("アニメーション")
+        .appendField(new Blockly.FieldTextInput("box"), "SELECTOR")
+        .appendField("種類")
+        .appendField(new Blockly.FieldDropdown([
+            ["フェードイン","fadeIn"],
+            ["フェードアウト","fadeOut"],
+            ["回転","rotate"],
+            ["縮小","scaleDown"],
+            ["拡大","scaleUp"],
+            ["上に移動","moveUp"],
+            ["下に移動","moveDown"],
+            ["右に移動","moveRight"],
+            ["左に移動","moveLeft"]
+        ]), "ANIM_TYPE")
+        .appendField("時間")
+        .appendField(new Blockly.FieldNumber(2, 0, 10, 0.1), "DURATION")
+        .appendField("秒 繰り返し")
+        .appendField(new Blockly.FieldDropdown([["1回","1"], ["無限","infinite"]]), "REPEAT");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip("指定した要素用のCSSアニメーションコードを出力します");
+    this.setHelpUrl("");
+    this.setStyle('css_blocks');
+  }
+};
+Blockly.common.defineBlocks({css_animation_block: css_animation_block});
+
+// --------------------
+// JSコード生成（CSS文字列を出力）
+// --------------------
+javascript.javascriptGenerator.forBlock['css_animation_block'] = function(block) {
+  const selector = block.getFieldValue('SELECTOR');
+  const animType = block.getFieldValue('ANIM_TYPE');
+  const duration = block.getFieldValue('DURATION');
+  const repeat = block.getFieldValue('REPEAT');
+
+  let keyframes = "";
+  switch(animType){
+    case "fadeIn": keyframes = "0% { opacity: 0; } 100% { opacity: 1; }"; break;
+    case "fadeOut": keyframes = "0% { opacity: 1; } 100% { opacity: 0; }"; break;
+    case "rotate": keyframes = "0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }"; break;
+    case "scaleDown": keyframes = "0% { transform: scale(1); } 100% { transform: scale(0.5); }"; break;
+    case "scaleUp": keyframes = "0% { transform: scale(1); } 100% { transform: scale(2); }"; break;
+    case "moveUp": keyframes = "0% { transform: translateY(0); } 100% { transform: translateY(-200px); }"; break;
+    case "moveDown": keyframes = "0% { transform: translateY(0); } 100% { transform: translateY(200px); }"; break;
+    case "moveRight": keyframes = "0% { transform: translateX(0); } 100% { transform: translateX(200px); }"; break;
+    case "moveLeft": keyframes = "0% { transform: translateX(0); } 100% { transform: translateX(-200px); }"; break;
+  }
+
+  return `/* CSSアニメーション */\n` +
+         `.class-${selector} {\n  animation: ${animType} ${duration}s linear ${repeat};\n}\n` +
+         `@keyframes ${animType} {\n  ${keyframes}\n}\n`;
+};
