@@ -15,6 +15,8 @@ window.addEventListener('DOMContentLoaded', () => {
           <block type="html_ol"></block>
           <block type="html_li"></block>
           <block type="html_button"></block>
+          <block type="html_class"></block>
+          <block type="html_id"></block>
         </category>
         <category name="装飾" categorystyle="css_category">
           <block type="style"></block>
@@ -25,6 +27,8 @@ window.addEventListener('DOMContentLoaded', () => {
           <block type="fontsize"></block>
           <block type="bold"></block>
           <block type="radius"></block>
+          <label text="アニメーション"></label>
+          <block type="css_animation_block"></block>
         </category>
         <category name="機能" categorystyle="js_category">
           <block type="js_script"></block>
