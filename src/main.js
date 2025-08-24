@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
     scrollbars: true,
     trashcan: true,
     zoom: { startScale: 0.75, controls: true, wheel: true },
-    grid: { spacing: 20, length: 3, colour: '#ccc', snap: true },
+    grid: { spacing: 50, length: 1, colour: '#000000', snap: true },
     renderer: 'zelos',
     theme: 'StackLight',
   });
@@ -128,21 +128,29 @@ function save() {
 
 // 読み込み
 function load() {
-  if (confirm('すべてのブロックを削除しますか？')) {
-    workspace.clear();
+  workspace.clear();
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.xml';
   input.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
+      // 拡張子を除いたファイル名を取得
+      const fileNameOnly = file.name.replace(/\.xml$/i, '');
+
+      // input#title にセット
+      const titleInput = document.getElementById('title');
+      if (titleInput) {
+        titleInput.value = fileNameOnly;
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
           const xmlText = e.target.result;
           const xml = Blockly.utils.xml.textToDom(xmlText);
           Blockly.Xml.domToWorkspace(xml, workspace);
-          showToast('ブロックを読み込みました');
+          showToast(`${file.name}を読み込みました`);
         } catch (err) {
           console.error('ワークスペースの読み込みエラー:', err);
           showToast('読み込みに失敗しました', 'danger');
@@ -152,7 +160,6 @@ function load() {
     }
   });
   input.click();
-  }
 }
 
 // エクスポート
