@@ -44,29 +44,16 @@ const ZelosDark = Blockly.Theme.defineTheme('ZelosDark', {
   const stackLight = Blockly.Theme.defineTheme('stackLight', {
     base: Blockly.Themes.Zelos,
     blockStyles: {
-      html_blocks: {
-        colourPrimary: '#dd4a24',
-        colourSecondary: '#6b2213',
-      },
-      css_blocks: {
-        colourPrimary: '#5ba58c',
-        colourSecondary: '#121c1c',
-      },
-      js_blocks: {
-        colourPrimary: '#d39c41',
-        colourSecondary: '#4e3c17',
-      },
+      html_blocks: { colourPrimary: '#dd4a24', colourSecondary: '#6b2213' },
+      css_blocks: { colourPrimary: '#5ba58c', colourSecondary: '#121c1c' },
+      js_blocks: { colourPrimary: '#d39c41', colourSecondary: '#4e3c17' },
+      define_blocks: { colourPrimary: '#ff6680', colourSecondary: '#401A20' },
     },
     categoryStyles: {
-      html_category: {
-        colour: '#dd4a24',
-      },
-      css_category: {
-        colour: '#5ba58c',
-      },
-      js_category: {
-        colour: '#d39c41',
-      }
+      html_category: { colour: '#dd4a24' },
+      css_category: { colour: '#5ba58c' },
+      js_category: { colour: '#d39c41' },
+      define_category: { colour: '#ff6680' },
     },
     componentStyles: {
       workspaceBackgroundColour: '#f0f0f0',
@@ -78,48 +65,32 @@ const ZelosDark = Blockly.Theme.defineTheme('ZelosDark', {
   const stackDark = Blockly.Theme.defineTheme('stackDark', {
     base: Blockly.Themes.ZelosDark,
     blockStyles: {
-      html_blocks: {
-        colourPrimary: '#2c0f07',
-        colourSecondary: '#6b2213',
-        colourTertiary: '#dd4a24',
-      },
-      css_blocks: {
-        colourPrimary: '#121c1c',
-        colourSecondary: '#5ba58c',
-        colourTertiary: '#5ba58c',
-      },
-      js_blocks: {
-        colourPrimary: '#2a200d',
-        colourSecondary: '#eac97b',
-        colourTertiary: '#eac97b',
-      }
+      html_blocks: { colourPrimary: '#2c0f07', colourSecondary: '#6b2213', colourTertiary: '#dd4a24' },
+      css_blocks: { colourPrimary: '#121c1c', colourSecondary: '#5ba58c', colourTertiary: '#5ba58c' },
+      js_blocks: { colourPrimary: '#2a200d', colourSecondary: '#eac97b', colourTertiary: '#eac97b' },
+      define_blocks: { colourPrimary: '#401A20', colourSecondary: '#ff6680', colourTertiary: '#ff6680' },
     },
     categoryStyles: {
-      html_category: {
-        colour: '#2c0f07',
-      },
-      css_category: {
-        colour: '#121c1c',
-      },
-      js_category: {
-        colour: '#2a200d',
-      },
+      html_category: { colour: '#2c0f07' },
+      css_category: { colour: '#121c1c' },
+      js_category: { colour: '#2a200d' },
+      define_category: { colour: '#401A20' },
     },
     componentStyles: {
-        // Blocklyエディタの背景やツールボックスなどの色
-        workspaceBackgroundColour: '#1e1e1e',
-        toolboxBackgroundColour: '#2e2e2e',
-        toolboxForegroundColour: '#ffffff',
-        flyoutBackgroundColour: '#d0d0d0',
-        flyoutForegroundColour: '#000000',
-        scrollbarColour: '#c0c0c0',
-        insertionMarkerColour: '#3e3e3e',
-        insertionMarkerOpacity: 1.5,
-        markerColour: '#000000',
-        cursorColour: '#000000',
-        blackBackground: true,
-    },
+      workspaceBackgroundColour: '#1e1e1e',
+      toolboxBackgroundColour: '#2e2e2e',
+      toolboxForegroundColour: '#ffffff',
+      flyoutBackgroundColour: '#d0d0d0',
+      flyoutForegroundColour: '#000000',
+      scrollbarColour: '#c0c0c0',
+      insertionMarkerColour: '#3e3e3e',
+      insertionMarkerOpacity: 1.5,
+      markerColour: '#000000',
+      cursorColour: '#000000',
+      blackBackground: true,
+    }
   });
+  
 
 const themes = {
     zelos: "Blockly.Themes.Zelos",
