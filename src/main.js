@@ -33,10 +33,74 @@ window.addEventListener('DOMContentLoaded', () => {
         <category name="機能" categorystyle="js_category">
           <block type="js_script"></block>
           <block type="js_button_event"></block>
-          <block type="js_console"></block>
+          <block type="js_console">
+            <value name="TXT">
+              <shadow type="txt">
+                <field name="TEXT">テキスト</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="js_alert">
+            <value name="TXT">
+              <shadow type="txt">
+                <field name="TEXT">テキスト</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="js_confirm">
+            <value name="TXT">
+              <shadow type="txt">
+                <field name="TEXT">テキスト</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="js_prompt">
+            <value name="TEXT">
+              <shadow type="txt">
+                <field name="TEXT">テキスト</field>
+              </shadow>
+            </value>
+          </block>
           <label text="合成音声"></label>
-          <block type="text_to_speech"></block>
-        </category>
+          <block type="text_to_speech">
+            <value name="TEXT">
+              <shadow type="txt">
+                <field name="TEXT">こんにちは</field>
+              </shadow>
+            </value>
+            <value name="RATE">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="PITCH">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="VOLUME">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+          <category name="定義" categorystyle="define_category">
+            <block type="js_define">
+              <field name="NAME">myBlock</field>
+            </block>
+            <block type="js_define_return">
+              <field name="RETURN">値</field>
+            </block>
+            <block type="js_define_call">
+              <field name="NAME">myBlock</field>
+              <value name="VALUE">
+                <shadow type="txt">
+                  <field name="TEXT">txt</field>
+                </shadow>
+              </value>
+            </block>
+          </category>
+          </category>
       </xml>`,
     media: 'https://unpkg.com/blockly/media/',
     scrollbars: true,
@@ -46,6 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
     renderer: 'zelos',
     theme: 'StackLight',
   });
+  
 
   function updatePreview() {
     const iframe = document.getElementById('previewFrame');
@@ -73,10 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
   updatePreview();
 });
 
-// =================
 // グローバル関数
-// =================
-
 // トースト通知表示用
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
