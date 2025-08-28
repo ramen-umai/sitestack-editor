@@ -120,7 +120,7 @@ Blockly.common.defineBlocks({
   html_a: {
       init: function() {
           this.appendDummyInput()
-              .appendField('リンク')
+              .appendField('テキスト')
               .appendField(new Blockly.FieldTextInput('リンクテキスト'), 'TEXT')
               .appendField('URL')
               .appendField(new Blockly.FieldTextInput('https://example.com'), 'URL');
@@ -276,14 +276,14 @@ Blockly.common.defineBlocks({
   html_class: {
       init: function() {
           this.appendDummyInput()
-              .appendField('キーが')
-              .appendField(new Blockly.FieldTextInput('キー名'), 'CLASS')
+              .appendField('クラス名')
+              .appendField(new Blockly.FieldTextInput('クラス名'), 'CLASS')
               .appendField('の設定を適用させる');
           this.appendStatementInput('CONTENT')
               .setCheck(null); // ← セミコロン追加
           this.setPreviousStatement(true, null);
           this.setNextStatement(true, null);
-          this.setTooltip('キーのスタイルを適用させます'); // 修正
+          this.setTooltip('クラスのスタイルを適用させます'); // 修正
           this.setHelpUrl('');
           this.setStyle('html_blocks');
       }
@@ -291,14 +291,14 @@ Blockly.common.defineBlocks({
   html_id: {
       init: function() {
           this.appendDummyInput()
-              .appendField('スペシャルキーが')
-              .appendField(new Blockly.FieldTextInput('スペシャルキー名'), 'ID')
+              .appendField('ID名')
+              .appendField(new Blockly.FieldTextInput('ID名'), 'ID')
               .appendField('の設定を適用させる');
           this.appendStatementInput('CONTENT')
               .setCheck(null); // ← セミコロン追加
           this.setPreviousStatement(true, null);
           this.setNextStatement(true, null);
-          this.setTooltip('スペシャルキー専用のスタイルを適用させます'); // 修正
+          this.setTooltip('ID専用のスタイルを適用させます'); // 修正
           this.setHelpUrl('');
           this.setStyle('html_blocks');
       }
@@ -386,14 +386,14 @@ Blockly.common.defineBlocks({
     class_style: {
       init: function() {
         this.appendDummyInput('GS')
-          .appendField('キー名')
-          .appendField(new Blockly.FieldTextInput('キーの名前'), 'C')
+          .appendField('クラス名')
+          .appendField(new Blockly.FieldTextInput('クラス名'), 'C')
           .appendField('の設定');
         this.appendStatementInput("ITEMS").setCheck(null);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setStyle('css_blocks');
-        this.setTooltip("キーの設定をします。");
+        this.setTooltip("クラスの設定をします。");
         this.setHelpUrl("https://udemy.benesse.co.jp/design/web-design/what-is-css.html");
       },
       customContextMenu: function(options) {
@@ -404,7 +404,7 @@ Blockly.common.defineBlocks({
             callback: null
           });
           options.push({
-            text: "スペシャルキー名...の設定",
+            text: "ID名...の設定",
             enabled: true,
             callback: function() {
               replaceBlock(block, 'id_style');
@@ -425,14 +425,14 @@ Blockly.common.defineBlocks({
     id_style: {
       init: function() {
         this.appendDummyInput('GS')
-          .appendField('スペシャルキー名')
-          .appendField(new Blockly.FieldTextInput('キー名'), 'C')
+          .appendField('ID名')
+          .appendField(new Blockly.FieldTextInput('ID名'), 'C')
           .appendField('の設定');
         this.appendStatementInput("ITEMS").setCheck(null);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setStyle('css_blocks');
-        this.setTooltip("スペシャルキーの設定をします。");
+        this.setTooltip("IDの設定をします。");
         this.setHelpUrl("https://udemy.benesse.co.jp/design/web-design/what-is-css.html");
       },
       customContextMenu: function(options) {
@@ -443,7 +443,7 @@ Blockly.common.defineBlocks({
             callback: null
           });
           options.push({
-            text: "キー名...の設定",
+            text: "クラス名...の設定",
             enabled: true,
             callback: function() {
               replaceBlock(block, 'class_style');
@@ -599,6 +599,79 @@ javascript.javascriptGenerator.forBlock['css_animation_block'] = function(block)
          `@keyframes ${animType} {\n  ${keyframes}\n}\n`;
 };
 
+const css_media = {
+  init: function() {
+    this.appendDummyInput('MENU')
+      .appendField(new Blockly.FieldDropdown([
+          ['スマホ', 'max-width: 480px'],
+          ['タブレット(縦向き)', 'max-width: 768px'],
+          ['タブレット(横向き)', 'max-width: 992px'],
+          ['ノートPC', 'max-width: 1200px'],
+          ['デスクトップPC', 'min-width: 1200px']
+        ]), 'MENU')
+      .appendField('の時のスタイルを');
+    this.appendStatementInput('S'); // ← 内側にスタイルを書くブロック
+    this.appendDummyInput('TXT')
+      .appendField('にする');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('指定された機種の時に、指定したスタイルを適用します。');
+    this.setStyle('css_blocks');
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({ css_media: css_media });
+
+javascript.javascriptGenerator.forBlock['css_media'] = function(block, generator) {
+  const condition = block.getFieldValue('MENU'); // 例: "max-width: 768px"
+  const styles = generator.statementToCode(block, 'S'); // 中に書いたCSS
+  const code = `@media (${condition}) {\n${styles}}\n`;
+  return code;
+};
+
+const css_variables = {
+  init: function() {
+    this.appendDummyInput('MENU')
+      .appendField('カラー定義');
+    this.appendStatementInput('TXT');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('色や画像などを定義して使いまわします');
+    this.setStyle('css_blocks');
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({css_variables: css_variables});
+                    
+javascript.javascriptGenerator.forBlock['css_variables'] = function(block, generator) {
+  const styles = generator.statementToCode(block, 'TXT');
+  const indented = styles.split('\n').map(line => line ? '  ' + line : line).join('\n');
+  const code = `:root {\n${indented}\n}\n`;
+  return code;
+};
+
+const css_variables_content = {
+  init: function() {
+    this.appendDummyInput('MENU')
+      .appendField('定義項目名')
+      .appendField(new Blockly.FieldTextInput('color'), 'NAME')
+      .appendField('値')
+      .appendField(new Blockly.FieldTextInput('#000000'), 'COL');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('色や画像などを定義して使いまわします');
+    this.setStyle('css_blocks');
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({css_variables_content: css_variables_content});
+                    
+javascript.javascriptGenerator.forBlock['css_variables_content'] = function(block) {
+  const text_name = block.getFieldValue('NAME');
+  const text_col = block.getFieldValue('COL');
+  const code = `--${text_name}: ${text_col};\n`;
+  return code;
+}
 
 // js_blocks
 Blockly.common.defineBlocks({
@@ -823,7 +896,7 @@ javascript.javascriptGenerator.forBlock['js_prompt'] = function(block) {
 const js_if = {
   init: function() {
     this.appendValueInput('TEXT')
-    .setCheck('Boolean')
+      .setCheck('Boolean')
       .appendField('もし');
     this.appendDummyInput('NAME')
       .appendField('なら');
@@ -835,14 +908,121 @@ const js_if = {
     this.setHelpUrl('');
   }
 };
-Blockly.common.defineBlocks({js_if: js_if});
-                  
-javascript.javascriptGenerator.forBlock['js_if'] = function() {
-  const value_text = generator.valueToCode(block, 'TEXT', javascript.Order.ATOMIC);
+Blockly.common.defineBlocks({ js_if: js_if });
+
+javascript.javascriptGenerator.forBlock['js_if'] = function(block, generator) {
+  const value_text = generator.valueToCode(block, 'TEXT', javascript.Order.ATOMIC) || 'false';
   const statement_block = generator.statementToCode(block, 'BLOCK');
   const code = `if (${value_text}) {\n${statement_block}}\n`;
   return code;
+};
+
+const js_if_else = {
+  init: function() {
+    this.appendValueInput('TEXT')
+    .setCheck('Boolean')
+      .appendField('もし');
+    this.appendDummyInput('NAME')
+      .appendField('なら');
+    this.appendStatementInput('BLOCK');
+    this.appendDummyInput('TT')
+      .appendField('でなければ');
+    this.appendStatementInput('BB');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('条件を満たしている場合は、上の処理を実行し、満たしていない場合は、下の処理を実行します');
+    this.setStyle('js_blocks');
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({js_if_else: js_if_else});
+                    
+javascript.javascriptGenerator.forBlock['js_if_else'] = function(block, generator) {
+  // TODO: change Order.ATOMIC to the correct operator precedence strength
+  const value_text = generator.valueToCode(block, 'TEXT', javascript.Order.ATOMIC);
+
+  const statement_block = generator.statementToCode(block, 'BLOCK');
+
+  const statement_bb = generator.statementToCode(block, 'BB');
+
+  // TODO: Assemble javascript into the code variable.
+  const code = `if (${value_text}) {\n${statement_block}}\n else {\n${statement_bb}}\n`;
+  return code;
 }
+
+const js_for = {
+  init: function() {
+    this.appendValueInput('NUM')
+    .setCheck('Number');
+    this.appendDummyInput('TXT')
+      .appendField('回繰り返す');
+    this.appendStatementInput('S');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('指定された回数処理を実行します。');
+    this.setStyle('js_blocks');
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({js_for: js_for});
+                    
+javascript.javascriptGenerator.forBlock['js_for'] = function(block, generator) {
+  const value_num = generator.valueToCode(block, 'NUM', javascript.Order.ATOMIC);
+  const statement_s = generator.statementToCode(block, 'S');
+  const variable = generator.nameDB_.getDistinctName('i', Blockly.Names.NameType.VARIABLE);
+  const code = `for (let ${variable} = 0; ${variable} < ${value_num}; ${variable}++) {\n${statement_s}}\n`;
+  return code;
+}
+
+const js_math = {
+  init: function() {
+    this.appendValueInput('NUMO')
+      .setCheck('Number');
+    this.appendDummyInput('MENU')
+      .appendField(new Blockly.FieldDropdown([
+        ['+', '+'],
+        ['-', '-'],
+        ['×', '*'],
+        ['÷', '/'],
+        ['^', '**']
+      ]), 'MENU');
+    this.appendValueInput('NUMT')
+      .setCheck('Number');
+    this.setInputsInline(true);
+    this.setOutput(true, 'Number'); // ← 出力ブロックに変更
+    this.setTooltip('2つの数を演算します');
+    this.setStyle('js_blocks'); // ← math系の見た目を指定
+    this.setHelpUrl('');
+  }
+};
+Blockly.common.defineBlocks({ js_math: js_math });
+
+javascript.javascriptGenerator.forBlock['js_math'] = function(block, generator) {
+  const value_numo = generator.valueToCode(block, 'NUMO', javascript.Order.NONE) || '0';
+  const value_numt = generator.valueToCode(block, 'NUMT', javascript.Order.NONE) || '0';
+  const operator = block.getFieldValue('MENU');
+
+  let order;
+  switch (operator) {
+    case '+':
+    case '-':
+      order = javascript.Order.ADDITION;
+      break;
+    case '*':
+    case '/':
+      order = javascript.Order.MULTIPLICATION;
+      break;
+    case '**':
+      order = javascript.Order.EXPONENTIATION;
+      break;
+    default:
+      order = javascript.Order.NONE;
+      break;
+  }
+
+  const code = `${value_numo} ${operator} ${value_numt}`;
+  return [code, order];
+};
 
 Blockly.common.defineBlocks({
   js_define: {
@@ -917,7 +1097,7 @@ Blockly.Blocks['js_define_call'] = {
     this.appendDummyInput("DUMMY");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setStyle('define_blocks'); // JSON では style でしたが、色を直接指定
+    this.setStyle('define_blocks');
     this.setTooltip("定義済みのブロックを呼び出します。");
     this.setHelpUrl("");
   }
