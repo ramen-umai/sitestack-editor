@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Blocklyブロック ドキュメント</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { color: #2c3e50; }
+    h2 { color: #2980b9; margin-top: 30px; }
+    .block { background: #fff; border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+    .block pre { background: #eee; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    .block ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>Blocklyブロック ドキュメント</h1>
+<div id="docs"></div>
+
+<script>
+const blocksData = [
+  {
+    "category": "要素",
+    "blocks": [
+      {"type": "html_h", "description": "見出しを作るブロック", "sample": "<h1>見出し</h1>\n<p>1 番目の見出し [テキスト]</p>"},
+      {"type": "html_p", "description": "段落を作るブロック", "sample": "<p>段落</p>\n<p>テキスト[テキスト]</p>"},
+      {"type": "html_a", "description": "リンクを作るブロック", "sample": "<a href=\"#\">リンク</a>\n<p>テキスト[リンクテキスト]URL[https://example.com]</p>"},
+      {"type": "html_img", "description": "画像を表示するブロック", "sample": "<img src=\"image.png\">\n<p>画像[URL]代替テキスト[テキスト]</p>"},
+      {"type": "html_ul", "description": "箇条書き（ul）を作るブロック", "sample": "<ul><li>項目</li></ul>\n<p>順不同リスト　内容：</p>"},
+      {"type": "html_ol", "description": "番号付きリスト（ol）を作るブロック", "sample": "<ol><li>項目</li></ol>\n<p>番号付きリスト　内容：</p>"},
+      {"type": "html_li", "description": "リストの項目（li）を作るブロック", "sample": "<li>項目</li>\n<p>リスト項目[項目]</p>"},
+      {"type": "html_button", "description": "ボタンを作るブロック", "sample": "<button>クリック</button>\n<p>ボタン[ここをクリック]名前[btn]</p>"},
+      {"type": "html_class", "description": "クラス属性を設定するブロック", "sample": "class=\"classname\"\n<p>クラス名[クラス名]の設定を適用させる：</p>"},
+      {"type": "html_id", "description": "ID属性を設定するブロック", "sample": "id=\"idname\"\n<p>ID名[ID名]の設定を適用させる：</p>"}
+    ]
+  },
+  {
+    "category": "装飾",
+    "blocks": [
+      {"type": "style", "description": "任意のCSSスタイルを設定するブロック", "sample": "<style><\/style>\n<p>見た目：</p>"},
+      {"type": "body_style", "description": "bodyのスタイルを設定するブロック", "sample": "body { background: #fff; }\n<p>サイト全体：</p>"},
+      {"type": "class_style", "description": "クラスのスタイルを設定するブロック", "sample": ".classname { color: blue; }\n<p>クラス名[クラス名]の設定：</p>"},
+      {"type": "id_style", "description": "IDのスタイルを設定するブロック", "sample": "#idname { font-size: 16px; }\n<p>ID名[ID名]の設定：</p>"},
+      {"type": "color", "description": "文字や背景の色を指定するブロック", "sample": "color: #000000;\n<p>文字の色を[カラーコード]にする</p>"},
+      {"type": "fontsize", "description": "文字サイズを指定するブロック", "sample": "font-size: 16px;\n<p>文字サイズを[15]にする</p>"},
+      {"type": "bold", "description": "文字を太字にするブロック", "sample": "font-weight: bold;\n<p>文字を太字にする</p>"},
+      {"type": "radius", "description": "角丸を指定するブロック", "sample": "border-radius: 5px;\n<p>丸みの効果を[15]にする</p>"},
+      {"type": "css_media", "description": "メディアクエリで端末別スタイルを設定するブロック", "sample": "@media (max-width: 768px) { ... }\n<p>スマホ の時のスタイルを：\n\nにする</p>"},
+      {"type": "css_variables", "description": "CSS変数（カスタムプロパティ）を定義するブロック", "sample": ":root { --color: #000000; }\n<p>カラー定義：</p>"},
+      {"type": "css_variables_content", "description": "CSS変数の1項目を定義するブロック", "sample": "--color: #000000;\n<p>定義項目名[カラー]値[#000000]</p>"},
+      {"type": "css_animation_block", "description": "アニメーション用のCSSを定義するブロック", "sample": "animation: slide 2s;\n<p>アニメーション[box]種類フェードイン 時間[2]秒 繰り返し1回 ：</p>"}
+    ]
+  },
+  {
+    "category": "機能",
+    "blocks": [
+      {"type": "js_script", "description": "JavaScriptコードを埋め込むブロック", "sample": "<script>console.log('Hello');<\/script>\n<p>機能：</p>"},
+      {"type": "js_button_event", "description": "ボタンのクリックイベントを作るブロック", "sample": "button.onclick = function() { ... };\n<p>名前が[btn]のボタンが押されたとき</p>"},
+      {"type": "js_console", "description": "console.log, warn, errorで出力するブロック", "sample": "console.log('テキスト');\n<p>コンソールに[テキスト]を記録する </p>"},
+      {"type": "js_alert", "description": "alertでテキストを表示するブロック", "sample": "alert('テキスト');\n<p>ダイアログ[テキスト]と表示する</p>"},
+      {"type": "js_confirm", "description": "confirmで確認ダイアログを表示するブロック", "sample": "confirm('テキスト');\n<p>確認ダイアログ[テキスト]と表示する</p>"},
+      {"type": "js_prompt", "description": "promptで入力を受け付けるブロック", "sample": "prompt('テキスト');\n<p>入力ダイアログ[テキスト]と表示する</p>"},
+      {"type": "text_to_speech", "description": "合成音声でテキストを読み上げるブロック", "sample": "speechSynthesis.speak(new SpeechSynthesisUtterance('こんにちは'));\n<p>速さ[1]声の高さ[1]声の大きさ[1]で[こんにちは]と話す</p>"},
+      {"type": "js_if", "description": "条件分岐 if ブロック", "sample": "if (条件) { ... }\n<p>もし <条件> なら：\n\n</p>"},
+      {"type": "js_if_else", "description": "条件分岐 if-else ブロック", "sample": "if (条件) { ... } else { ... }\n<p>もし <条件>：なら\n\nそうでなければ：</p>"},
+      {"type": "js_for", "description": "指定回数繰り返す for ブロック", "sample": "for (let i=0; i<10; i++) { ... }\n<p>[10]回繰り返す：</p>"},
+      {"type": "js_math", "description": "演算を行うブロック", "sample": "1 + 1;\n<p>[1] + [1]</p>"}
+    ]
+  },
+  {
+    "category": "機能 > 定義",
+    "blocks": [
+      {"type": "js_define", "description": "関数を定義するブロック", "sample": "function myBlock() { ... }\n<p>定義[myBlock]：</p>"},
+      {"type": "js_define_return", "description": "値を返す関数の return ブロック", "sample": "return 値;\n<p>戻り値[値]</p>"},
+      {"type": "js_define_call", "description": "定義済み関数を呼び出すブロック", "sample": "myBlock('txt');\n<p>定義ブロック[myBlock]を使う 引数[テキスト]</p>"}
+    ]
+  }
+];
+
+const container = document.getElementById('docs');
+blocksData.forEach(category => {
+  const catTitle = document.createElement('h2');
+  catTitle.textContent = category.category;
+  container.appendChild(catTitle);
+
+  category.blocks.forEach(block => {
+    const div = document.createElement('div');
+    div.className = 'block';
+    div.innerHTML = `
+      <div class="title">${block.type}</div>
+      <p>${block.description}</p>
+      <pre>${block.sample}</pre>
+    `;
+    container.appendChild(div);
+  });
+});
+</script>
+</body>
+</html>
