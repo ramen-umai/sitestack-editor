@@ -27,6 +27,9 @@ window.addEventListener('DOMContentLoaded', () => {
           <block type="fontsize"></block>
           <block type="bold"></block>
           <block type="radius"></block>
+          <block type="css_media"></block>
+          <block type="css_variables"></block>
+          <block type="css_variables_content"></block>
           <label text="アニメーション"></label>
           <block type="css_animation_block"></block>
         </category>
@@ -79,6 +82,27 @@ window.addEventListener('DOMContentLoaded', () => {
               </shadow>
             </value>
             <value name="VOLUME">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="js_if"></block>
+          <block type="js_if_else"></block>
+          <block type="js_for">
+            <value name="NUM">
+              <shadow type="math_number">
+                <field name="NUM">10</field>
+              </shadow>
+            </value>
+          </block>
+          <block type="js_math">
+            <value name="NUMO">
+              <shadow type="math_number">
+                <field name="NUM">1</field>
+              </shadow>
+            </value>
+            <value name="NUMT">
               <shadow type="math_number">
                 <field name="NUM">1</field>
               </shadow>
